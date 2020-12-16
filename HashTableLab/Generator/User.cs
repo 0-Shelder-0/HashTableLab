@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text;
 
 namespace HashTableLab
@@ -30,6 +31,23 @@ namespace HashTableLab
             strBuilder.Append("\n");
             
             return strBuilder.ToString();
+        }
+
+        public override int GetHashCode()
+        {
+            const int coefficient = 13;
+            var hashCode = _userId.Select((t, i) => t * Math.Pow(coefficient, i)).Sum();
+            hashCode += 1;
+            return Convert.ToInt32(Math.Ceiling(hashCode));
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is User user)
+            {
+                return string.Compare(_userId, user._userId, StringComparison.Ordinal) == 0;
+            }
+            return false;
         }
     }
 }
