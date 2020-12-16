@@ -24,7 +24,7 @@ namespace HashTableLab.HashTable
         {
             if (Count + 1 > (int) (_capacity * ResizingFactor))
             {
-                Resize();
+                Resize(_capacity * 2);
             }
             return AddKey(_items, key);
         }
@@ -45,7 +45,7 @@ namespace HashTableLab.HashTable
                 }
                 if (--Count < _capacity / 2 && _capacity / 2 >= MinCapacity)
                 {
-                    Rehash();
+                    Resize(_capacity / 2);
                 }
                 return true;
             }
@@ -91,25 +91,10 @@ namespace HashTableLab.HashTable
             return false;
         }
 
-        private void Resize()
+        private void Resize(int size)
         {
             Count = 0;
-            _capacity *= 2;
-            var newItems = new LinkedList<TKey>[_capacity];
-            foreach (var linkedList in _items.Where(linkedList => linkedList != null))
-            {
-                foreach (var key in linkedList)
-                {
-                    AddKey(newItems, key);
-                }
-            }
-            _items = newItems;
-        }
-
-        private void Rehash()
-        {
-            _capacity /= 2;
-            Count = 0;
+            _capacity = size;
             var newItems = new LinkedList<TKey>[_capacity];
             foreach (var linkedList in _items.Where(linkedList => linkedList != null))
             {
