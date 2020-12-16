@@ -9,7 +9,7 @@ namespace HashTableLab.Generator
         private readonly string _userId;
         private readonly DateTime _registrationDate;
         private readonly string[] _genres;
-        
+
         public User(string id, DateTime registrationDate, string[] genres)
         {
             _userId = id;
@@ -22,23 +22,20 @@ namespace HashTableLab.Generator
             var strBuilder = new StringBuilder();
             strBuilder.Append($"{_userId} \n");
             strBuilder.Append($"{_registrationDate} \n");
-            
+
             foreach (var genre in _genres)
             {
                 strBuilder.Append($"{genre} \t");
             }
 
             strBuilder.Append("\n");
-            
+
             return strBuilder.ToString();
         }
 
         public override int GetHashCode()
         {
-            const int coefficient = 13;
-            var hashCode = _userId.Select((t, i) => t * Math.Pow(coefficient, i)).Sum();
-            hashCode += 1;
-            return Convert.ToInt32(Math.Ceiling(hashCode));
+            return Math.Abs(HashCode.Combine(_userId));
         }
 
         public override bool Equals(object obj)

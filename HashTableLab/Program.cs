@@ -10,7 +10,7 @@ namespace HashTableLab
     {
         private static void Main()
         {
-            const int number = 1000000;
+            const int number = 10000000;
             var hashTable = new HashTable<User>();
             var generator = new Generator.Generator();
             foreach (var user in generator.Generate(number))
@@ -44,7 +44,7 @@ namespace HashTableLab
             }
             Console.WriteLine($"Min: {min}");
             Console.WriteLine($"Max: {max}");
-            Console.WriteLine($"Average: {hashTable.Capacity / (double) hashTable.Count}");
+            Console.WriteLine($"Average: {hashTable.Count / (double) hashTable.Capacity}");
         }
     }
 }
