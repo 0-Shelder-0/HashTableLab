@@ -1,4 +1,4 @@
-namespace HashTableLab
+namespace HashTableLab.Generator
 {
     public enum Genres
     {

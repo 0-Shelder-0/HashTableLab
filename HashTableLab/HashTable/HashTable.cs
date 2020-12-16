@@ -6,25 +6,25 @@ namespace HashTableLab.HashTable
 {
     public class HashTable<TKey> : IHashTable<TKey>
     {
-        private int _capacity;
         private const int MinCapacity = 8;
         private const double ResizingFactor = 0.75;
         private LinkedList<TKey>[] _items;
 
         public int Count { get; private set; }
+        public int Capacity { get; private set; }
 
         public HashTable()
         {
             Count = 0;
-            _capacity = MinCapacity;
-            _items = new LinkedList<TKey>[_capacity];
+            Capacity = MinCapacity;
+            _items = new LinkedList<TKey>[Capacity];
         }
 
         public bool Add(TKey key)
         {
-            if (Count + 1 > (int) (_capacity * ResizingFactor))
+            if (Count + 1 > (int) (Capacity * ResizingFactor))
             {
-                Resize(_capacity * 2);
+                Resize(Capacity * 2);
             }
             return AddKey(_items, key);
         }
@@ -43,9 +43,9 @@ namespace HashTableLab.HashTable
                 {
                     _items[hashCode] = null;
                 }
-                if (--Count < _capacity / 2 && _capacity / 2 >= MinCapacity)
+                if (--Count < Capacity / 2 && Capacity / 2 >= MinCapacity)
                 {
-                    Resize(_capacity / 2);
+                    Resize(Capacity / 2);
                 }
                 return true;
             }
@@ -72,7 +72,7 @@ namespace HashTableLab.HashTable
 
         private int GetHashCode(TKey key)
         {
-            return key.GetHashCode() % _capacity;
+            return key.GetHashCode() % Capacity;
         }
 
         private bool AddKey(LinkedList<TKey>[] keys, TKey key)
@@ -94,8 +94,8 @@ namespace HashTableLab.HashTable
         private void Resize(int size)
         {
             Count = 0;
-            _capacity = size;
-            var newItems = new LinkedList<TKey>[_capacity];
+            Capacity = size;
+            var newItems = new LinkedList<TKey>[Capacity];
             foreach (var linkedList in _items.Where(linkedList => linkedList != null))
             {
                 foreach (var key in linkedList)

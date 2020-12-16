@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace HashTableLab
+namespace HashTableLab.Generator
 {
     public class User
     {
